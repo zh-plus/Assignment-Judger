@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d862cda6-9b19-4da0-b842-6acddb904c53" name="Assignment-Judger">
+        <fileTransfer rootFolder="/home/zhengf/zhenghao/Assignment-Judger" accessType="SFTP" host="10.20.111.5" port="22" sshConfigId="cdda419d-b535-4fdc-bd31-5e37f91018ea" sshConfig="zhengf@10.20.111.5:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
