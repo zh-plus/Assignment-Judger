@@ -8,6 +8,7 @@ from functools import partial
 from tools import CompilerException, JudgeInfo, print, contains
 
 CORRECT_DISTANCE = 12965
+assignment_folder_name = 'real_assignments'
 
 info = JudgeInfo()
 
@@ -32,7 +33,7 @@ def print_process(p: subprocess.CompletedProcess, message: str):
     if p.stdout:
         if len(p.stdout) > 20000:
             print(f'Stdout length too long: {len(p.stdout)}, only print firt 2000 letters.', style='bold red')
-            print(p.stdout[:2000].decode('utf-8'))
+            print(p.stdout[:2000])
         else:
             print(p.stdout)
 
@@ -50,7 +51,8 @@ def print_process(p: subprocess.CompletedProcess, message: str):
 
 
 def run(command: str, input_content=None, print_msg=""):
-    partial_run = partial(subprocess.run, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd="A2/assignments", timeout=5, encoding='utf-8')
+    partial_run = partial(subprocess.run, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=f"A2/{assignment_folder_name}", timeout=5,
+                          encoding='utf-8')
 
     try:
         p = partial_run(command.split(" "), input=input_content)
@@ -79,7 +81,7 @@ def compile_test(clang_path, file, objective_path):
 def change_name_test(objective_path):
     info[-1].add_test('change\nname')
 
-    shutil.move('A2/assignments/world_cities.csv', 'A2/assignments/world_cities.tmp')
+    shutil.move(f'A2/{assignment_folder_name}/world_cities.csv', f'A2/{assignment_folder_name}/world_cities.tmp')
 
     run_input = """New York City
 Hong Kong
@@ -91,7 +93,7 @@ bye"""
 
     out_str = run(f'./{objective_path}', input_content=run_input, print_msg="Run output")
 
-    shutil.move('A2/assignments/world_cities.tmp', 'A2/assignments/world_cities.csv')
+    shutil.move(f'A2/{assignment_folder_name}/world_cities.tmp', f'A2/{assignment_folder_name}/world_cities.csv')
 
     # Check output
     if contains(out_str, 'world_cities.csv', 'miss', 'file'):
@@ -237,7 +239,7 @@ def judge(file: str):
 
 if __name__ == '__main__':
     # judge('11911626.cpp')
-    for root, dirs, files in os.walk('A2/assignments'):
+    for root, dirs, files in os.walk(f'A2/{assignment_folder_name}'):
         valid_names = list(filter(lambda s: s.endswith('.cpp'), files))
         for filename in valid_names:
             judge(filename)
