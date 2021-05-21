@@ -75,7 +75,7 @@ class JudgeInfo:
                     row.append("[bold grey]NON-TESTED[/bold grey]")
 
             table.add_row(*row)
-        print(table)
+        print(table, soft_wrap=True)
 
 
 def contains(target: str, *sub_strs):

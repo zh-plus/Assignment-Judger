@@ -50,7 +50,7 @@ def print_process(p: subprocess.CompletedProcess, message: str):
 
 
 def run(command: str, input_content=None, print_msg=""):
-    partial_run = partial(subprocess.run, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd="assignments", timeout=5, encoding='utf-8')
+    partial_run = partial(subprocess.run, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd="A2/assignments", timeout=5, encoding='utf-8')
 
     try:
         p = partial_run(command.split(" "), input=input_content)
@@ -77,9 +77,9 @@ def compile_test(clang_path, file, objective_path):
 
 
 def change_name_test(objective_path):
-    info[-1].add_test('change_name')
+    info[-1].add_test('change\nname')
 
-    shutil.move('assignments/world_cities.csv', 'assignments/world_cities.tmp')
+    shutil.move('A2/assignments/world_cities.csv', 'A2/assignments/world_cities.tmp')
 
     run_input = """New York City
 Hong Kong
@@ -91,7 +91,7 @@ bye"""
 
     out_str = run(f'./{objective_path}', input_content=run_input, print_msg="Run output")
 
-    shutil.move('assignments/world_cities.tmp', 'assignments/world_cities.csv')
+    shutil.move('A2/assignments/world_cities.tmp', 'A2/assignments/world_cities.csv')
 
     # Check output
     if contains(out_str, 'world_cities.csv', 'miss', 'file'):
@@ -105,7 +105,7 @@ bye"""
 
 
 def correctness_test(objective_path):
-    info[-1].add_test('correctness')
+    info[-1].add_test('correct')
 
     run_input = """New York City
 Hong Kong
@@ -121,7 +121,7 @@ bye"""
 
 
 def auto_select_test(objective_path):
-    info[-1].add_test('auto_select')
+    info[-1].add_test('auto\nselect')
 
     run_input = """New York
 Hong Kong
@@ -137,7 +137,7 @@ bye"""
 
 
 def manual_select_test(objective_path):
-    info[-1].add_test('manual_select')
+    info[-1].add_test('manual\nselect')
 
     run_input = """New
 Hong Kong
@@ -182,7 +182,7 @@ bye"""
 
 
 def ignore_whitespace_test(objective_path):
-    info[-1].add_test('ignore_ws')
+    info[-1].add_test('ignore\nws')
 
     run_input = """  New York City 
 Hong Kong
@@ -198,13 +198,13 @@ bye"""
 
 
 def case_insensitive_test(objective_path):
-    info[-1].add_test('ignore_whitespace')
+    info[-1].add_test('case\nsensitive')
 
-    run_input = """  New York City 
-Hong Kong
+    run_input = """NEw YoRk City
+Hong KONG
 bye"""
 
-    print('[4] Ignore Whitespace Test\n'
+    print('[5] Case Insensitive Test\n'
           'Run with input:', style='bold magenta')
     print(run_input)
 
@@ -232,11 +232,12 @@ def judge(file: str):
     auto_select_test(objective_path)
     manual_select_test(objective_path)
     ignore_whitespace_test(objective_path)
+    case_insensitive_test(objective_path)
 
 
 if __name__ == '__main__':
     # judge('11911626.cpp')
-    for root, dirs, files in os.walk('assignments'):
+    for root, dirs, files in os.walk('A2/assignments'):
         valid_names = list(filter(lambda s: s.endswith('.cpp'), files))
         for filename in valid_names:
             judge(filename)
